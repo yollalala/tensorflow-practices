@@ -37,4 +37,42 @@ init = tf.global_variables_initializer()
 sess.run(init)
 print(sess.run(my_scalar))
 
+# make a vector of zeros with the same size as 
+# the number of matrix's column (squarish_squares)
+zeros = tf.zeros(squarish_squares.shape[1])
+print(sess.run(zeros))
+
+# reshape the tensors
+rank_three_tensor = tf.ones([3, 4, 5])	# shape of the tensor 3x4x5
+matrix = tf.reshape(rank_three_tensor, [6, 10])	# reshape into 6x10 tensor
+matrixA = tf.reshape(matrix, [3, -1])	# reshape into 3x20
+matrixB = tf.reshape(matrixA, [4, 3, -1])	# reshape into 4x3x5
+#error_matrix = tf.reshape(matrixB, [13, 2, 2])	# error, shape value does not match
+
+# cast a constant integer tensor into float tensor
+float_tensor = tf.cast(tf.constant([1, 2, 3]), dtype=tf.float32)
+
+# inspect the tensor's datatype
+print(float_tensor.dtype)
+
+# evaluate tensors
+constant = tf.constant([1, 2, 3])
+tensor = constant * constant
+with sess.as_default():
+	print(tensor.eval())	# only work with the default session
+
+# evaluate tensor with placeholder tensor
+with sess.as_default():
+	p = tf.placeholder(tf.float32)
+	t = p + 1.0
+	#t.eval()	# will fail
+	print(t.eval(feed_dict={p:2.0}))	# succeed
+
+# print tensors value
+t = tf.constant([1, 2, 3])
+tf.Print(t, [t])	# does nothing
+v = tf.Print(t, [t])
+v = v + 1
+print(sess.run(v))
+
 
