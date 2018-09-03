@@ -74,6 +74,7 @@ d = tf.get_variable('d', shape=(), initializer=tf.zeros_initializer())
 assignment2 = d.assign_add(1)
 with tf.control_dependencies([assignment2]):
 	e = d.read_value()
+sess.run(tf.global_variables_initializer())
 print(sess.run(e))
 print(sess.run(d))
 
